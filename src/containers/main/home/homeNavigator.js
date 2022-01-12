@@ -14,7 +14,8 @@ import palette from 'res/palette';
 import images from 'res/images';
 import colors from '../../../res/colors';
 import DirectMessageScreen from '../DirectMessage/DirectMessageScreen';
-import PostCommentsScreen from '../post/PostCommentScreen';
+import PostCommentsScreen from '../post/comments/PostCommentScreen';
+import ReplyCommentScreen from '../post/comments/ReplyCommentScreen';
 
 export default function () {
   const Stack = createStackNavigator();
@@ -82,6 +83,17 @@ export default function () {
           }
         })
         }
+      />
+      <Stack.Screen
+        name='ReplyCommentScreen'
+        component={ReplyCommentScreen}
+        options={({ navigation }) => ({
+          title: '',
+          headerStyle: {
+            backgroundColor: colors.bottomBackGround,
+            shadowColor: colors.seperatorLineColor,
+          }
+        })}
       />
     </Stack.Navigator>
   );

@@ -1,45 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TouchableOpacity, Image, View, StyleSheet, Text } from 'react-native';
 import images from '../../../res/images';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PostLikes from './PostLikes';
-
-
-
-
-// function tapToLike(likeIcon) {
-
-//   // const [count, setCount] = React.useState(0)
-//   if (likeIcon % 2 === 0) {
-//     return images.redHeart;
-
-//   } else {
-//     return images.like;
-//   }
-// }
-// function tapToBookmark(bookmarkIcon) {
-//   if (bookmarkIcon % 2 === 0) {
-//     return images.bookmarkWhite;
-//   } else {
-//     return images.bookmark;
-//   }
-// }
-
-
-
+import { useNavigation } from '@react-navigation/native';
 
 export default function PostActions({ post }) {
-  console.log(post.postId)
+  const navigation = useNavigation()
+  console.log("post in postactio", post.didlike)
+  let didlike = post.didlike
   const ID = post.postId
   const Api = `http://188.166.189.237:3001/api/v1/post/like/${ID}`;
 
   const [count, setCount] = React.useState(post.likes)
 
+
   const increase = () => {
-    if (count <= 0) {
-      return setCount(count + 1)
-    } else if (count > 0) {
+    if (likeIcon % 2 === 1) {
       return setCount(count - 1)
+    } else if (likeIcon % 2 === 0) {
+      return setCount(count + 1)
     }
   }
 
@@ -47,7 +27,6 @@ export default function PostActions({ post }) {
     if (likeIcon % 2 === 1) {
       return (images.redHeart)
     } else {
-
       return (images.like);
     }
   }
@@ -77,19 +56,49 @@ export default function PostActions({ post }) {
       })
   }
 
+  const likeCheck = () => {
+    if (didlike === true) {
+      return images.redHeart
+    } else {
+      return images.like
+    }
+  }
+
+  useEffect(() => {
+    likeCheck()
+  }, [])
+
   const [likeIcon, setLikeIcon] = React.useState(1);
   const [bookmarkIcon, setBookmarkIcon] = React.useState(1);
 
   return (
     <View style={{ flexDirection: "column" }}>
       <View style={Styles.container}>
+
+
         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-          <TouchableOpacity onPress={() => { setLikeIcon(likeIcon + 1); likeOnPost(); increase() }}>
+
+          {
+            didlike ?
+              <TouchableOpacity onPress={() => { setLikeIcon(likeIcon + 1); likeOnPost(); increase() }}>
+                <Image source={images.redHeart, tapToLike(likeIcon)} style={Styles.actionIcons} />
+              </TouchableOpacity>
+              :
+              <TouchableOpacity onPress={() => { setLikeIcon(likeIcon + 1); likeOnPost(); increase() }}>
+                <Image source={images.like, tapToLike(likeIcon)} style={Styles.actionIcons} />
+              </TouchableOpacity>
+          }
+
+          {/* <TouchableOpacity onPress={() => { setLikeIcon(likeIcon + 1); likeOnPost(); increase() }}>
             <Image source={tapToLike(likeIcon)} style={Styles.actionIcons} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log('Pressed Comment')}>
+          </TouchableOpacity> */}
+
+
+          <TouchableOpacity onPress={() => navigation.navigate("CommentsScreen", { post })}>
             <Image source={images.comment} style={Styles.actionIcons} />
           </TouchableOpacity>
+
+
           <TouchableOpacity onPress={() => console.log('Pressed Direct Message')}>
             <Image source={images.direct_message} style={Styles.actionIcons} />
           </TouchableOpacity>

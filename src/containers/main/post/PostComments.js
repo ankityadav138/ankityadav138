@@ -18,7 +18,7 @@ export default function PostComments({ post }) {
     return (
       <TouchableOpacity
         style={{ marginTop: 5, marginStart: 15 }}
-        onPress={() => navigation.navigate("CommentsScreen")}>
+        onPress={() => navigation.navigate("CommentsScreen", { post })}>
         <Text style={{ color: colors.textFaded2 }}>
           View all {post.comments} comments
         </Text>

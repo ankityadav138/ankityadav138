@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function homeScreen({ navigation }) {
   const [Data, setData] = useState([])
-  const [stories, setStories] = useState([])
+  const [stories, setStories] = useState([]);
   console.log("datass", Data);
 
   const API = 'http://188.166.189.237:3001/api/v1/users/feed';
@@ -25,6 +25,7 @@ export default function homeScreen({ navigation }) {
       });
       const response = await request;
       const parsed = await response.json();
+      console.log(parsed)
       setData(parsed.data);
     }
     getData();

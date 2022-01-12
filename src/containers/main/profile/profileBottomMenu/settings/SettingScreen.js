@@ -102,7 +102,7 @@ function SettingScreen() {
                         text: 'Confirm',
                         onPress: () => {
                             AsyncStorage.removeItem("TOKEN")
-                            // navigation.navigate('Login');
+                            navigation.navigate('Login');
                         },
                     },
                 ],
